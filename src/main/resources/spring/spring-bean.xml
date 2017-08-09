@@ -56,8 +56,16 @@
         <property name="password" value="${jdbc.password1}" />
     </bean>
     
-    
-    
+    <bean id ="dataSource" class= "com.bohai.adviser.dataSource.DynamicDataSource" >  
+          <property name ="targetDataSources">  
+                <map key-type ="java.lang.String">  
+                      <entry value-ref ="dataSourceSJZX" key= "sjzx"></entry >  
+                      <entry value-ref ="dataSourceDZTG" key= "dztg"></entry >  
+                </map >  
+          </property >  
+          <!-- 默认使用dataSourceDZTG的数据源 -->
+          <property name ="defaultTargetDataSource" ref= "dataSourceDZTG"></property >  
+   </bean >  
 		
 	<!-- 将数据源映射到SessionFactory中 -->
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

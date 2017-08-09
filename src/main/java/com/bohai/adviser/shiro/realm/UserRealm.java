@@ -1,6 +1,7 @@
 package com.bohai.adviser.shiro.realm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,10 +16,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.bohai.dataCenter.entity.SysUser;
-import com.bohai.dataCenter.entity.SysUsersPermissions;
-import com.bohai.dataCenter.persistence.SysUserMapper;
-import com.bohai.dataCenter.persistence.SysUsersPermissionsMapper;
+import com.bohai.adviser.entity.dztg.SysUser;
+import com.bohai.adviser.entity.dztg.SysUsersPermissions;
+import com.bohai.adviser.persistence.dztg.SysUserMapper;
+import com.bohai.adviser.persistence.dztg.SysUsersPermissionsMapper;
 
 public class UserRealm extends AuthorizingRealm {
     
@@ -38,8 +39,8 @@ public class UserRealm extends AuthorizingRealm {
     	
     	SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
     	
-    	ArrayList<SysUsersPermissions> sysUsersPermissionsList =new ArrayList<SysUsersPermissions>();
-    	sysUsersPermissionsList=this.sysUsersPermissionsMapper.select(userName);
+    	List<SysUsersPermissions> sysUsersPermissionsList =new ArrayList<SysUsersPermissions>();
+    	sysUsersPermissionsList=this.sysUsersPermissionsMapper.selectByUserName(userName);
     	for(SysUsersPermissions sysUsersPermission:sysUsersPermissionsList){
     		authorizationInfo.addStringPermission(sysUsersPermission.getPermission());
     	}
@@ -52,7 +53,7 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
         //String password = new String((char[])token.getCredentials());
         
-        SysUser sysUser = this.sysUserMapper.queryUserByUsername(username);
+        SysUser sysUser = this.sysUserMapper.selectByPrimaryKey(username);
         if(sysUser == null){
             logger.warn("无此用户信息,用户名："+username);
             throw new UnknownAccountException("无此用户信息,用户名："+username);

@@ -20,15 +20,15 @@
     <!-- oracle -->
     <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
         connectionURL="jdbc:oracle:thin:@192.168.16.46:1521:xe"
-        userId="sjzx"
-        password="sjzx">
+        userId="dztg"
+        password="dztg">
     </jdbcConnection>
 
     <javaTypeResolver >
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="com.bohai.dataCenter.entity" targetProject="src\main\java">
+    <javaModelGenerator targetPackage="com.bohai.adviser.entity" targetProject="src\main\java">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
@@ -37,7 +37,7 @@
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.bohai.dataCenter.persistence"  targetProject="src\main\java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.bohai.adviser.persistence"  targetProject="src\main\java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -192,66 +192,22 @@
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table> -->
     
-    <!-- T_REPORTE_INVESTOR_REBATE 交易所返还到客户表 -->
-    <!-- <table schema="" tableName="T_REPORTE_INVESTOR_REBATE" domainObjectName="ReporteInvestorRebate" 
+    <!-- <table schema="sjzx" tableName="T_CRM_MARKETER" domainObjectName="CrmMarketer" 
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table> -->
     
-    <!-- 交易所返还特例名单 -->
-    <!-- <table schema="" tableName="T_SPECIAL_RETURN" domainObjectName="SpecialReturn" 
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!-- 交易所返还特例统计表 -->
-    <!-- <table schema="" tableName="T_REPORT_SPECIAL_RETURN" domainObjectName="ReportSpecialReturn" 
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!--<table schema="" tableName="T_REPORT_MARKETER_INTEREST" domainObjectName="ReportMarketerInterest" 
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!-- caoxx建的表 -->
-    <!-- <table schema="" tableName="T_CUST_TRADE" domainObjectName="CustTrade" 
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!-- <table schema="" tableName="T_REPORT_DEP" domainObjectName="ReportDep"
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!-- <table schema="" tableName="T_CRM_CUSTOMER_HISTORY" domainObjectName="CrmCustomerHistory"
+    <table schema="dztg" tableName="sys_permissions" domainObjectName="SysPermission" 
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>
     
-    <table schema="" tableName="T_CRM_DEPT_HISTORY" domainObjectName="CrmDeptHistory"
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
+    <table schema="dztg" tableName="sys_users" domainObjectName="SysUser" 
+    enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>
     
-    <table schema="" tableName="T_CRM_MARKETER_HISTORY" domainObjectName="CrmMarketerHistory"
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table>
-    
-    <table schema="" tableName="T_CRM_MEDIATOR_HISTORY" domainObjectName="CrmMediatorHistory"
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <!-- <table schema="" tableName="SYS_USERS_PERMISSIONS" domainObjectName="SysUsersPermissions"
-        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
-        enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table> -->
-    
-    <table schema="" tableName="T_REPORT_MEDIATOR" domainObjectName="ReportMediator"
+    <table schema="dztg" tableName="SYS_USERS_PERMISSIONS" domainObjectName="SysUsersPermissions"
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>

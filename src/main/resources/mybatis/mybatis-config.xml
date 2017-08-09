@@ -77,43 +77,7 @@
   
     <!-- 映射资源文件 -->
     <mappers>
-        <mapper resource="mybatis/mapper/SysUserMapper.xml"/>
-        <mapper resource="mybatis/mapper/SysRoleMapper.xml"/>
-        <mapper resource="mybatis/mapper/SysPermissionMapper.xml"/>
-        <mapper resource="mybatis/mapper/MarketerCustMapper.xml"/>
-        <mapper resource="mybatis/mapper/MarketerMapper.xml"/>
-        <mapper resource="mybatis/mapper/MarketerMediatorMapper.xml"/>
-        <mapper resource="mybatis/mapper/MediatorCustMapper.xml"/>
-        <mapper resource="mybatis/mapper/MediatorMapper.xml"/>
-        <mapper resource="mybatis/mapper/OpenRecordMapper.xml"/>
-        <mapper resource="mybatis/mapper/TransactionStatisticsMapper.xml"/>
-        <mapper resource="mybatis/mapper/CapitalStatementMapper.xml"/>
-        <mapper resource="mybatis/mapper/RebateListMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportRebateMapper.xml"/>
-        <mapper resource="mybatis/mapper/TradingDateMapper.xml"/>
-        <mapper resource="mybatis/mapper/TradeDataMapper.xml"/>
-        <mapper resource="mybatis/mapper/InstrumentAttributeMapper.xml"/>
-        <mapper resource="mybatis/mapper/CloseDataMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportExchangeRebateMapper.xml"/>
-        <mapper resource="mybatis/mapper/CtpTradeDataMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmCustomerMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmMediatorMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmMarketerMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmDeptMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReporteInvestorRebateMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportSpecialReturnMapper.xml"/>
-        <mapper resource="mybatis/mapper/SpecialReturnMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportMarketerInterestMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportDepMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmCustomerHistoryMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmMediatorHistoryMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmMarketerHistoryMapper.xml"/>
-        <mapper resource="mybatis/mapper/CrmDeptHistoryMapper.xml"/>
-        <mapper resource="mybatis/mapper/SysUsersPermissionsMapper.xml"/>
-        <mapper resource="mybatis/mapper/ReportMediatorMapper.xml"/>
-        
-        <!-- 视图 -->
-        <mapper resource="mybatis/mapper/VTradeDetailMapper.xml"/>
+        <mapper resource="mybatis/mapper/sjzx/CrmMarketerMapper.xml"/>
 
     </mappers>
 
