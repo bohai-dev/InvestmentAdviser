@@ -53,15 +53,16 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
         //String password = new String((char[])token.getCredentials());
         
-        SysUser sysUser = this.sysUserMapper.selectByPrimaryKey(username);
+        /*SysUser sysUser = this.sysUserMapper.selectByPrimaryKey(username);
         if(sysUser == null){
             logger.warn("无此用户信息,用户名："+username);
             throw new UnknownAccountException("无此用户信息,用户名："+username);
-        }
+        }*/
         
         logger.info("token: "+JSON.toJSONString(token));
         
-        return new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
+        //return new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
+        return new SimpleAuthenticationInfo(username, new String((char[])token.getCredentials()), getName());
         
     }
 

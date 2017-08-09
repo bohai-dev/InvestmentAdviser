@@ -8,10 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.alibaba.fastjson.JSON;
-import com.bohai.dataCenter.api.ProfitQueryService;
-import com.bohai.dataCenter.api.exception.BohaiException;
-import com.bohai.dataCenter.api.vo.InvestorProfitParamVO;
-import com.bohai.dataCenter.api.vo.InvestorProfitResultVO;
+import com.bohai.adviser.exception.BohaiException;
+import com.bohai.adviser.service.ProfitQueryService;
+import com.bohai.adviser.vo.InvestorProfitParamVO;
+import com.bohai.adviser.vo.InvestorProfitResultVO;
 
 @ContextConfiguration(locations = "classpath:spring/dubbo-consumer.xml")
 public class QueryProfitServiceTest extends AbstractJUnit4SpringContextTests{

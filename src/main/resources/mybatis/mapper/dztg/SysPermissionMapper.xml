@@ -194,6 +194,14 @@
   <select id="queryPermissionsByParentPermissionId" parameterType="java.util.Map" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from DZTG.SYS_PERMISSIONS
-    where PARENT_PERMISSION_ID = #{parentPermissionId,jdbcType=VARCHAR}
+    <where>
+        <if test="parentPermissionId != null">
+           and parent_permission_id = #{parentPermissionId,jdbcType=VARCHAR}
+        </if>
+        <if test="parentPermissionId == null">
+           and PARENT_PERMISSION_ID is null
+        </if>
+    </where>
+    order by SORT
   </select>
 </mapper>

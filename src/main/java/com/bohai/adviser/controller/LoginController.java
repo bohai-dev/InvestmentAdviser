@@ -71,4 +71,13 @@ public class LoginController {
         return modelAndView;
         
     }
+    
+    @RequestMapping(value="logout")
+    public String logout(){
+        Subject currentUser = SecurityUtils.getSubject();
+        
+        currentUser.logout();
+        
+        return "redirect:login.jsp";
+    }
 }

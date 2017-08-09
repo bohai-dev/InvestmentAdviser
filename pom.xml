@@ -9,12 +9,12 @@
   <url>http://maven.apache.org</url>
   
   <dependencies>
-  
-    <dependency>
+   
+    <!-- <dependency>
         <groupId>com.bohai.dev</groupId>
         <artifactId>dataCenter-api</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-    </dependency>
+    </dependency> -->
     
     <dependency>
         <groupId>org.springframework</groupId>

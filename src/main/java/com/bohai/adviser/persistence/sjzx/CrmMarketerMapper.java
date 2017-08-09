@@ -1,6 +1,10 @@
 package com.bohai.adviser.persistence.sjzx;
 
+import java.util.List;
+
 import com.bohai.adviser.entity.sjzx.CrmMarketer;
+import com.bohai.adviser.vo.MarketerProfitParamVO;
+import com.bohai.adviser.vo.MarketerProfitResultVO;
 
 public interface CrmMarketerMapper {
     /**
@@ -50,4 +54,6 @@ public interface CrmMarketerMapper {
      * @mbggenerated Wed Aug 09 10:41:18 CST 2017
      */
     int updateByPrimaryKey(CrmMarketer record);
+    
+    List<MarketerProfitResultVO> queryMarketerSelfProfit(MarketerProfitParamVO paramVO);
 }

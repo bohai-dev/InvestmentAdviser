@@ -77,7 +77,9 @@
   
     <!-- 映射资源文件 -->
     <mappers>
-        <mapper resource="mybatis/mapper/sjzx/CrmMarketerMapper.xml"/>
+        <mapper resource="mybatis/mapper/dztg/SysPermissionMapper.xml"/>
+        <mapper resource="mybatis/mapper/dztg/SysUserMapper.xml"/>
+        <mapper resource="mybatis/mapper/dztg/SysUsersPermissionsMapper.xml"/>
 
     </mappers>
 
