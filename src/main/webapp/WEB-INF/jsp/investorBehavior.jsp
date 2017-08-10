@@ -13,65 +13,42 @@
     <link href="resources/css/dashboard.css" rel="stylesheet">
     <link href="resources/css/sticky-footer.css" rel="stylesheet">
     <script type="text/javascript" src="resources/tree/bootstrap-treeview.min.js"></script>
+    <style>
+        
+        img {
+            height:auto;
+            width:1600px;
+        }
+    </style>
     <script type="text/javascript">
    
         $(function(){
-            /* var tree = [
-            {
-                  text: "Node 1",
-                  icon: "glyphicon glyphicon-stop",
-                  selectedIcon: "glyphicon glyphicon-stop",
-                  color: "#000000",
-                  backColor: "#FFFFFF",
-                  href: "http://localhost:8081/bohai-dataCenter/admin/123",
-                  selectable: true,
-                  state: {
-                    checked: true,
-                    disabled: true,
-                    expanded: true,
-                    selected: true
-                  }, 
-                  tags: ['available']
-                },
-              {
-                text: "Parent 1",
-                nodes: [
-                  {
-                    text: "Child 1",
-                    nodes: [
-                      {
-                        text: "Grandchild 1",
-                        href: "http://localhost:8081/bohai-dataCenter/admin/123"
-                      },
-                      {
-                        text: "Grandchild 2",
-                        href: "http://localhost:8081/bohai-dataCenter/admin/123",
-                      }
-                    ]
-                  },
-                  {
-                    text: "Child 2",
-                    href: "http://localhost:8081/bohai-dataCenter/admin/123"
-                  }
-                ]
-              },
-              {
-                text: "Parent 2",
-                tags: ["23"]
-              },
-              {
-                text: "Parent 3"
-              },
-              {
-                text: "Parent 4"
-              },
-              {
-                text: "Parent 5"
-              }
-            ];  */
+            
             var treeObj = ${sessionScope.treeView};
             $('#tree').treeview({data: treeObj,enableLinks: true});
         });
+        function queryImage(){
+        	if(!isNull($('#mediatorNo').val())){
+        		console.log($('#mediatorNo').val());
+        		
+        		var temp=$('#mediatorNo').val();
+        		$("#picture").attr("src","resources/image/picture/" +temp+".jpg");    //修正收益
+        		$("#picture_toatal").attr("src", "resources/image/picture_total/"+temp+".jpg");  //完整收益
+        		$("#picture_hedge").attr("src", "resources/image/picture_hedge/"+temp+".jpg");    //修正盈亏
+        		$("#picture_hedge_total").attr("src", "resources/image/picture_hedge_total/"+temp+".jpg"); //完整盈亏
+        		
+        	}else{
+        		alert('请输入投资者代码，再查询！');
+        	}
+        	
+        }
+        function isNull(value){
+            if(value == "" || value == undefined || value == null){
+                return true;
+            }else{
+                return false;
+            }
+        } 
     </script>
   </head>
 
@@ -110,10 +87,45 @@
             
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
+          <h1 class="page-header">客户行为分析</h1>
+           <div class="row">
+                  <form class="form-horizontal" style="margin-top: 30px" id="mediatorForm">
+                      <div class="form-group">
+                      
+                            <!-- <label for="reportMonth1" class="col-sm-2 col-md-1 col-md-offset-1 control-label">统计年月</label>
+                            <div class="col-sm-10 col-md-2">
+                              <input type="text" class="form-control" id="reportMonth1">
+                            </div> -->
+                            
+                            <label for="mediatorNo" class="col-sm-2 col-md-1 control-label">投资者代码</label>
+                            <div class="col-sm-10 col-md-2">
+                              <input type="text" class="form-control" id="mediatorNo">
+                            </div>                    
+                           
+                            
+                            <div class="col-sm-10 col-md-2 col-md-offset-1 ">
+                                <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryImage()">
+                            </div>
+                            
+                      </div>
+                        
+                  </form>
+            </div>      
           <div class="row placeholders">
-          
+          	  <label>修正收益率图</label>
+              <img alt="" src="resources/image/picture/10100187.jpg" id="picture">   
+          	  <br><br><br>
+          	
+              <label>完整收益率图</label>  
+              <img alt="" src="resources/image/picture_total/10100187.jpg" id="picture_toatal">
+          	  <br><br><br> 
+          </div>
+          <div class="row placeholders">
+              <label>修正盈亏图</label>
+              <img alt="" src="resources/image/picture_hedge/10100187.jpg" id="picture_hedge">  
+               <br><br><br>  
+              <label>完整盈亏图</label>
+              <img alt="" src="resources/image/picture_hedge_total/10100187.jpg" id="picture_hedge_total">  
           </div>
 
         </div>
