@@ -541,7 +541,7 @@
             
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h4 class="page-header"><a href="toHome" style="text-decoration: none;"><i class="glyphicon glyphicon-home"></i></a> --> <a href="toBusinessReport" style="text-decoration: none;">统计报表</a> --> <a href="toInvestorReport" style="text-decoration: none;">利润查询</a></h4>
+          <h4 class="page-header"><a href="toHome" style="text-decoration: none;"><i class="glyphicon glyphicon-home"></i></a> --> <a href="toHome" style="text-decoration: none;">首页</a></h4>
               
               <!-- <h2 class="sub-header">客户利润产出查询</h2> -->
 
@@ -580,9 +580,9 @@
                                   <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryInvestorProfit()">
                               </div>
                               
-                              <div class="col-sm-10 col-md-2 ">
+                              <!-- <div class="col-sm-10 col-md-2 ">
                                   <input class="btn btn-default col-xs-7" type="button" value="打印" onclick="printInvestorProfit()">
-                              </div>
+                              </div> -->
                         </div>
                           
                     </form>
@@ -613,18 +613,18 @@
                           <tr>
                               <!-- <th data-field="state" data-checkbox="true"></th> -->
                               
-                              <th data-field="MONTH" data-align="center" >月份</th>
-                              <th data-field="INVESTOR_NO" data-align="center" >投资者代码</th>
-                              <th data-field="INVESTOR_NAME" data-align="center" >投资者名称</th>
-                              <th data-field="LCSXF" data-align="center" data-formatter="numberFormate">留存手续费</th>
-                              <th data-field="INTEREST" data-align="center" data-formatter="numberFormate">利息</th>
-                              <th data-field="EXCHANGE_RETURN" data-align="center" data-formatter="numberFormate">交返</th>
-                              <th data-field="SPECIAL_INTEREST" data-align="center" data-formatter="numberFormate">客户拿走利息</th>
-                              <th data-field="AMOUNT" data-align="center" data-formatter="numberFormate">客户拿走交返</th>
-                              <th data-field="SXFJSR" data-align="center" data-formatter="numberFormate">手续费净收入</th>
-                              <th data-field="NET_INTEREST" data-align="center" data-formatter="numberFormate">净利息</th>
-                              <th data-field="NET_AMOUNT" data-align="center" data-formatter="numberFormate">净交返</th>
-                              <th data-field="NET_PROFIT" data-align="center" data-formatter="numberFormate">净利润</th>
+                              <th data-field="month" data-align="center" >月份</th>
+                              <th data-field="investorNo" data-align="center" >投资者代码</th>
+                              <th data-field="investorName" data-align="center" >投资者名称</th>
+                              <th data-field="lcsxf" data-align="center" data-formatter="numberFormate">留存手续费</th>
+                              <th data-field="interest" data-align="center" data-formatter="numberFormate">利息</th>
+                              <th data-field="exchangeReturn" data-align="center" data-formatter="numberFormate">交返</th>
+                              <th data-field="specialInterest" data-align="center" data-formatter="numberFormate">客户拿走利息</th>
+                              <th data-field="amount" data-align="center" data-formatter="numberFormate">客户拿走交返</th>
+                              <th data-field="sxfjsr" data-align="center" data-formatter="numberFormate">手续费净收入</th>
+                              <th data-field="netInterest" data-align="center" data-formatter="numberFormate">净利息</th>
+                              <th data-field="netAmount" data-align="center" data-formatter="numberFormate">净交返</th>
+                              <th data-field="netProfit" data-align="center" data-formatter="numberFormate">净利润</th>
                           </tr>
                           </thead>
                       </table>
@@ -786,9 +786,9 @@
                             <div class="col-sm-10 col-md-2 col-md-offset-1 ">
                                 <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryMediatorProfit()">
                             </div>
-                            <div class="col-sm-10 col-md-2 ">
+                            <!-- <div class="col-sm-10 col-md-2 ">
                                 <input class="btn btn-default col-xs-7" type="button" value="打印" onclick="printMediatorProfit()">
-                            </div>
+                            </div> -->
                       </div>
                         
                   </form>
@@ -818,18 +818,18 @@
                         <tr>
                             <!-- <th data-field="state" data-checkbox="true"></th> -->
                             
-                            <th data-field="MONTH" data-align="center" >月份</th>
-                            <th data-field="MEDIATOR_NO" data-align="center" >居间人编号</th>
-                            <th data-field="MEDIATOR_NAME" data-align="center" >居间人名称</th>
-                            <th data-field="SXFJSR" data-align="center" data-formatter="numberFormate">总手续费净收入</th>
-                            <th data-field="INTEREST" data-align="center" data-formatter="numberFormate">总利息</th>
-                            <th data-field="EXCHANGE_RETURN" data-align="center" data-formatter="numberFormate">总交返（剔税）</th>
-                            <th data-field="INVESTOR_SPECIAL_INTEREST" data-align="center" data-formatter="numberFormate">客户拿走利息</th>
-                            <th data-field="INVESTOR_SPECIAL_EXCHANGE" data-align="center" data-formatter="numberFormate">客户拿走交返（剔税）</th>
-                            <th data-field="MEDIATOR_SPECIAL_INTEREST" data-align="center" data-formatter="numberFormate">居间人拿走利息</th>
-                            <th data-field="MEDIATOR_SPECIAL_EXCHANGE" data-align="center" data-formatter="numberFormate">居间人拿走交返（剔税）</th>
-                            <th data-field="DBL16" data-align="center" data-formatter="numberFormate">居间人拿走返佣</th>
-                            <th data-field="NET_PROFIT" data-align="center" data-formatter="numberFormate">净利润</th>
+                            <th data-field="month" data-align="center" >月份</th>
+                            <th data-field="mediatorNo" data-align="center" >居间人编号</th>
+                            <th data-field="mediatorName" data-align="center" >居间人名称</th>
+                            <th data-field="sxfjsr" data-align="center" data-formatter="numberFormate">总手续费净收入</th>
+                            <th data-field="interest" data-align="center" data-formatter="numberFormate">总利息</th>
+                            <th data-field="exchangeReturn" data-align="center" data-formatter="numberFormate">总交返（剔税）</th>
+                            <th data-field="investorSpecialInterest" data-align="center" data-formatter="numberFormate">客户拿走利息</th>
+                            <th data-field="investorSpecialExchange" data-align="center" data-formatter="numberFormate">客户拿走交返（剔税）</th>
+                            <th data-field="mediatorSpecialInterest" data-align="center" data-formatter="numberFormate">居间人拿走利息</th>
+                            <th data-field="mediatorSpecialExchange" data-align="center" data-formatter="numberFormate">居间人拿走交返（剔税）</th>
+                            <th data-field="dbl16" data-align="center" data-formatter="numberFormate">居间人拿走返佣</th>
+                            <th data-field="netProfit" data-align="center" data-formatter="numberFormate">净利润</th>
                         </tr>
                         </thead>
                     </table>
@@ -1004,9 +1004,9 @@
                                 <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryMarketerProfit()">
                             </div>
                             
-                            <div class="col-sm-10 col-md-2 ">
+                            <!-- <div class="col-sm-10 col-md-2 ">
                                 <input class="btn btn-default col-xs-7" type="button" value="打印" onclick="printMarketerProfit()">
-                            </div>
+                            </div> -->
                       </div>
                         
                   </form>
@@ -1036,19 +1036,19 @@
                         <tr>
                             <!-- <th data-field="state" data-checkbox="true"></th> -->
                             
-                            <th data-field="MONTH" data-align="center" >月份</th>
-                            <th data-field="MARKETER_NO" data-align="center" >营销人员编号</th>
-                            <th data-field="MARKETER_NAME" data-align="center" >营销人员名称</th>
-                            <th data-field="SXFJSR" data-align="center" data-formatter="numberFormate">总手续费净收入</th>
-                            <th data-field="INTEREST" data-align="center" data-formatter="numberFormate">总利息</th>
-                            <th data-field="EXCHANGE_RETURN" data-align="center" data-formatter="numberFormate">总交返（剔税）</th>
-                            <th data-field="INVESTOR_SPECIAL_INTEREST" data-align="center" data-formatter="numberFormate">投资者拿走利息</th>
-                            <th data-field="INVESTOR_SPECIAL_EXCHANGE" data-align="center" data-formatter="numberFormate">投资者拿走交返（剔税）</th>
-                            <th data-field="MEDIATOR_SPECIAL_INTEREST" data-align="center" data-formatter="numberFormate">居间人拿走利息</th>
-                            <th data-field="MEDIATOR_SPECIAL_EXCHANGE" data-align="center" data-formatter="numberFormate">居间人拿走交返（剔税）</th>
-                            <th data-field="DBL16" data-align="center" data-formatter="numberFormate">居间人拿走返佣</th>
-                            <th data-field="MONEY" data-align="center" data-formatter="numberFormate">营销人员提成</th>
-                            <th data-field="NET_PROFIT" data-align="center" data-formatter="numberFormate">净利润</th>
+                            <th data-field="month" data-align="center" >月份</th>
+                            <th data-field="marketerNo" data-align="center" >营销人员编号</th>
+                            <th data-field="marketerName" data-align="center" >营销人员名称</th>
+                            <th data-field="sxfjsr" data-align="center" data-formatter="numberFormate">总手续费净收入</th>
+                            <th data-field="interest" data-align="center" data-formatter="numberFormate">总利息</th>
+                            <th data-field="exchangeReturn" data-align="center" data-formatter="numberFormate">总交返（剔税）</th>
+                            <th data-field="investorSpecialInterest" data-align="center" data-formatter="numberFormate">投资者拿走利息</th>
+                            <th data-field="investorSpecialExchange" data-align="center" data-formatter="numberFormate">投资者拿走交返（剔税）</th>
+                            <th data-field="mediatorSpecialInterest" data-align="center" data-formatter="numberFormate">居间人拿走利息</th>
+                            <th data-field="mediatorSpecialExchange" data-align="center" data-formatter="numberFormate">居间人拿走交返（剔税）</th>
+                            <th data-field="dbl16" data-align="center" data-formatter="numberFormate">居间人拿走返佣</th>
+                            <th data-field="money" data-align="center" data-formatter="numberFormate">营销人员提成</th>
+                            <th data-field="netProfit" data-align="center" data-formatter="numberFormate">净利润</th>
                         </tr>
                         </thead>
                     </table>

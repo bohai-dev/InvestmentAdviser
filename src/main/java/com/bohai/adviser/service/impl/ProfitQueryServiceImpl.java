@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.bohai.adviser.dataSource.DataSourceContextHolder;
 import com.bohai.adviser.dataSource.DataSourceType;
-import com.bohai.adviser.dataSource.DynamicDataSource;
 import com.bohai.adviser.exception.BohaiException;
 import com.bohai.adviser.persistence.sjzx.CrmCustomerMapper;
 import com.bohai.adviser.persistence.sjzx.CrmMarketerMapper;
@@ -26,6 +26,7 @@ import com.bohai.adviser.vo.MediatorProfitResultVO;
  * @author caojia
  *
  */
+@Service("profitQueryService")
 public class ProfitQueryServiceImpl implements ProfitQueryService {
     
     static Logger logger = Logger.getLogger(ProfitQueryServiceImpl.class);

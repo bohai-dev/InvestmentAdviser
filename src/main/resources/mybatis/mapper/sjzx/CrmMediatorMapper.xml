@@ -32,7 +32,7 @@
     <result column="IS_IB" property="isIb" jdbcType="CHAR" />
   </resultMap>
   
-  <resultMap type="com.bohai.dataCenter.api.vo.MediatorProfitResultVO" id="MediatorProfitMap">
+  <resultMap type="com.bohai.adviser.vo.MediatorProfitResultVO" id="MediatorProfitMap">
     <result column="MONTH" property="month"/>
     <result column="MEDIATOR_NO" property="mediatorNo"/>
     <result column="MEDIATOR_NAME" property="mediatorName"/>

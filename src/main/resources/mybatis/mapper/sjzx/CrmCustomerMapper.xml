@@ -402,15 +402,15 @@
     select to_char(TO_DATE(MONTH,'yyyymm'),'yyyy-mm') as  MONTH,
             INVESTOR_NO ,
             INVESTOR_NAME ,
-            INTEREST ,
-            EXCHANGE_RETURN ,
-            SPECIAL_INTEREST ,
-            SPECIAL_EXCHANGE ,
-            LCSXF ,
-            SXFJSR ,
-            INTEREST - nvl(SPECIAL_INTEREST,0) as NET_INTEREST ,
+            nvl(INTEREST,0) as  INTEREST,
+            nvl(EXCHANGE_RETURN,0) as  EXCHANGE_RETURN,
+            nvl(SPECIAL_INTEREST,0) as SPECIAL_INTEREST,
+            nvl(SPECIAL_EXCHANGE,0) as SPECIAL_EXCHANGE,
+            nvl(LCSXF,0) as  LCSXF,
+            nvl(SXFJSR,0) as  SXFJSR,
+            nvl(INTEREST,0) - nvl(SPECIAL_INTEREST,0) as NET_INTEREST ,
             nvl(EXCHANGE_RETURN,0) - nvl(SPECIAL_EXCHANGE,0) as NET_AMOUNT,
-            INTEREST + nvl(EXCHANGE_RETURN,0) + SXFJSR - nvl(SPECIAL_INTEREST,0)- nvl(SPECIAL_EXCHANGE,0) as NET_PROFIT
+            nvl(INTEREST,0) + nvl(EXCHANGE_RETURN,0) + nvl(SXFJSR,0) - nvl(SPECIAL_INTEREST,0)- nvl(SPECIAL_EXCHANGE,0) as NET_PROFIT
             from T_REPORT_INVESTOR_PROFIT
     <where> 
     

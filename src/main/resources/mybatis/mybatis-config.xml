@@ -80,7 +80,9 @@
         <mapper resource="mybatis/mapper/dztg/SysPermissionMapper.xml"/>
         <mapper resource="mybatis/mapper/dztg/SysUserMapper.xml"/>
         <mapper resource="mybatis/mapper/dztg/SysUsersPermissionsMapper.xml"/>
-
+        <mapper resource="mybatis/mapper/sjzx/CrmCustomerMapper.xml"/>
+        <mapper resource="mybatis/mapper/sjzx/CrmMarketerMapper.xml"/>
+        <mapper resource="mybatis/mapper/sjzx/CrmMediatorMapper.xml"/>
     </mappers>
 
 
