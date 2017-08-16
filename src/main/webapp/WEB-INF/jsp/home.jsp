@@ -44,9 +44,17 @@
     <!-- jqprint -->
     <script src="resources/jqprint/jquery.jqprint-0.3.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
-    
+    <style>
+        
+        img {
+            height:auto;
+            width:1600px;
+        }
+    </style>
     
     <script type="text/javascript">
+    
+    
         function operationFormatter(value,row,index) {
             var html = '<button type="button" id="cog'+index+'" class="btn btn-default btn-sm" title="设置">'
                          + '<i class="glyphicon glyphicon-cog"></i>'
@@ -93,13 +101,13 @@
         /* 查询投资者产生的利润 */
         function queryInvestorProfit(){
             
-        	//删除打印内容
-        	$('#investorNameCell').html('');
+            //删除打印内容
+            $('#investorNameCell').html('');
             $('#investorNoCell').html('');
             $('#depNameCell').html('');
             $('#INVESTOR_MARKETER_NAME').html('');
             $('#INVESTOR_MEDIATOR_NAME').html('');
-        	$('#NET_PROFIT_SUM').html('');
+            $('#NET_PROFIT_SUM').html('');
              $('#LCSXF_SUM').html('');
              $('#SXFJSR_SUM').html('');
              $('#INTEREST_SUM').html('');
@@ -107,7 +115,7 @@
              $('#EXCHANGE_RETURN_SUM').html('');
              $('#NET_AMOUNT_SUM').html('');
              for (var index = 0; index < 3; index++) {
-            	 $('#MONTH'+index).html('');
+                 $('#MONTH'+index).html('');
                  $('#NET_PROFIT'+index).html('');
                  $('#LCSXF'+index).html('');
                  $('#SXFJSR'+index).html('');
@@ -115,12 +123,25 @@
                  $('#NET_INTEREST'+index).html('');
                  $('#EXCHANGE_RETURN'+index).html('');
                  $('#NET_AMOUNT'+index).html('');
-			}
+            }
              
             if(isNull($('#investorName').val()) && isNull($("#investorNo").val())){
                 alert("请输入投资者代码或投资者名称");
                 return;
             }
+            
+            /* 显示客户行为分析图 */
+                
+            var temp='10100187';
+            $("#picture").attr("src","resources/image/picture/" +temp+".jpg");    //修正收益
+            $("#picture_toatal").attr("src", "resources/image/picture_total/"+temp+".jpg");  //完整收益
+            $("#picture_hedge").attr("src", "resources/image/picture_hedge/"+temp+".jpg");    //修正盈亏
+            $("#picture_hedge_total").attr("src", "resources/image/picture_hedge_total/"+temp+".jpg"); //完整盈亏
+            $('#p1').css('display','block');
+            $('#p2').css('display','block');
+            $('#p3').css('display','block');
+            $('#p4').css('display','block');
+            
             
             $("#investorProfit").bootstrapTable(
                     'refresh',{url:"queryInvestorProfit",
@@ -161,8 +182,8 @@
         
         /* 查询居间人产生的利润 */
         function queryMediatorProfit(){
-        	
-        	//删除打印内容
+            
+            //删除打印内容
             $('#mediatorNameCell').html('');
             $('#mediatorNoCell').html('');
             $('#customerCountCell').html('');
@@ -180,7 +201,7 @@
             $('#MEDIATOR_EXCHANGE_RETURN_SUM').html('');
             $('#MEDIATOR_NET_AMOUNT_SUM').html('');
             for (var index = 0; index < 3; index++) {
-            	$('#MEDIATOR_MONTH'+index).html('');
+                $('#MEDIATOR_MONTH'+index).html('');
                 $('#MEDIATOR_NET_PROFIT'+index).html('');
                 $('#MEDIATOR_SXFJSR'+index).html('');
                 $('#MEDIATOR_NET_SXFJSR'+index).html('');
@@ -188,7 +209,7 @@
                 $('#MEDIATOR_NET_INTEREST'+index).html('');
                 $('#MEDIATOR_EXCHANGE_RETURN'+index).html('');
                 $('#MEDIATOR_NET_AMOUNT'+index).html('');
-			}
+            }
             
             if(isNull($('#mediatorNo').val()) && isNull($("#mediatorName").val())){
                 alert("请输入投资者代码或投资者名称");
@@ -239,8 +260,8 @@
         
         /* 查询营销人与贡献度 */
         function queryMarketerProfit(){
-        	
-        	//删除打印内容
+            
+            //删除打印内容
             $('#MARKETER_MARKETER_NAME').html('');
             $('#MARKETER_DEP_NAME').html('');
             $('#MARKETER_CUSTOMER_COUNT').html('');
@@ -254,16 +275,16 @@
             $('#MARKETER_EXCHANGE_RETURN_SUM').html('');
             $('#MARKETER_NET_AMOUNT_SUM').html('');
             for (var index = 0; index < 3; index++) {
-				
-	            $('#MARKETER_MONTH'+index).html('');
-	            $('#MARKETER_NET_PROFIT'+index).html('');
-	            $('#MARKETER_SXFJSR'+index).html('');
-	            $('#MARKETER_NET_SXFJSR'+index).html('');
-	            $('#MARKETER_INTEREST'+index).html('');
-	            $('#MARKETER_NET_INTEREST'+index).html('');
-	            $('#MARKETER_EXCHANGE_RETURN'+index).html('');
-	            $('#MARKETER_NET_AMOUNT'+index).html('');
-			}
+                
+                $('#MARKETER_MONTH'+index).html('');
+                $('#MARKETER_NET_PROFIT'+index).html('');
+                $('#MARKETER_SXFJSR'+index).html('');
+                $('#MARKETER_NET_SXFJSR'+index).html('');
+                $('#MARKETER_INTEREST'+index).html('');
+                $('#MARKETER_NET_INTEREST'+index).html('');
+                $('#MARKETER_EXCHANGE_RETURN'+index).html('');
+                $('#MARKETER_NET_AMOUNT'+index).html('');
+            }
             
             
             if(isNull($('#marketerNo').val()) && isNull($("#marketerName").val())){
@@ -392,10 +413,10 @@
         
         //打印居间人利润
         function printMediatorProfit(){
-        	
-        	
-        	
-        	var NET_PROFIT_SUM = 0;
+            
+            
+            
+            var NET_PROFIT_SUM = 0;
             var SXFJSR_SUM = 0;
             var DBL16_SUM = 0;
             var NET_SXF_SUM = 0;
@@ -404,7 +425,7 @@
             var EXCHANGE_RETURN_SUM = 0;
             var NET_AMOUNT_SUM = 0;
             
-        	var allTableData = $("#mediatorProfit").bootstrapTable('getData');//获取表格的所有内容行  
+            var allTableData = $("#mediatorProfit").bootstrapTable('getData');//获取表格的所有内容行  
             console.info(allTableData)
             
             $.each(allTableData, function(index, content){
@@ -433,7 +454,7 @@
                 $('#MEDIATOR_NET_AMOUNT'+index).html(numberFormate((content.EXCHANGE_RETURN - content.INVESTOR_SPECIAL_EXCHANGE - content.MEDIATOR_SPECIAL_EXCHANGE).toFixed(2)));
                 
             });
-        	
+            
             //合计
             $('#MEDIATOR_NET_PROFIT_SUM').html(numberFormate(NET_PROFIT_SUM.toFixed(2)));
             $('#MEDIATOR_SXFJSR_SUM').html(numberFormate(SXFJSR_SUM.toFixed(2)));
@@ -450,10 +471,10 @@
         
         //打印营销人员利润
         function printMarketerProfit(){
-        	
-        	var allTableData = $("#marketerProfit").bootstrapTable('getData');//获取表格的所有内容行   
-        	
-        	var NET_PROFIT_SUM = 0;
+            
+            var allTableData = $("#marketerProfit").bootstrapTable('getData');//获取表格的所有内容行   
+            
+            var NET_PROFIT_SUM = 0;
             var SXFJSR_SUM = 0;
             var DBL16_SUM = 0;
             var NET_SXF_SUM = 0;
@@ -541,7 +562,7 @@
             
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h4 class="page-header"><a href="toHome" style="text-decoration: none;"><i class="glyphicon glyphicon-home"></i></a> --> <a href="toHome" style="text-decoration: none;">首页</a></h4>
+          <h4 class="page-header"><a href="toHome" style="text-decoration: none;"><i class="glyphicon glyphicon-home"></i></a> --> <a href="toHome" style="text-decoration: none;">利润查询及行为分析</a></h4>
               
               <!-- <h2 class="sub-header">客户利润产出查询</h2> -->
 
@@ -760,6 +781,26 @@
                             </tr>
                         </table>
                     </div>
+                    
+                    
+                    <div class="row placeholders">
+		              <label id="p1" for="picture" style="display:none;">修正收益率图</label>
+		              <img alt="" src="" id="picture">   
+		              <br><br><br>
+		            
+		              <label id="p2" for="picture_toatal" style="display:none;">完整收益率图</label>  
+		              <img alt="" src="" id="picture_toatal">
+		              <br><br><br> 
+		          </div>
+		          <div class="row placeholders">
+		              <label id="p3" for="picture_hedge" style="display:none;">修正盈亏图</label>
+		              <img alt="" src="" id="picture_hedge">  
+		               <br><br><br>  
+		              <label id="p4" for="picture_hedge_total" style="display:none;">完整盈亏图</label>
+		              <img alt="" src="" id="picture_hedge_total">  
+		              <br><br><br> 
+		          </div>
+		          
               </div>
               
               <!-- 居间人带来利润查询 -->
@@ -1188,7 +1229,8 @@
               </div>
               
             </div>
-              
+            
+            
         </div>
       </div>
       <div class="row placeholders">

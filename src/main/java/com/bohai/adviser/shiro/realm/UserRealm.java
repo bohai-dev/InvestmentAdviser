@@ -16,6 +16,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.bohai.adviser.dataSource.DataSourceContextHolder;
+import com.bohai.adviser.dataSource.DataSourceType;
 import com.bohai.adviser.entity.dztg.SysUser;
 import com.bohai.adviser.entity.dztg.SysUsersPermissions;
 import com.bohai.adviser.persistence.dztg.SysUserMapper;
@@ -40,6 +42,7 @@ public class UserRealm extends AuthorizingRealm {
     	SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
     	
     	List<SysUsersPermissions> sysUsersPermissionsList =new ArrayList<SysUsersPermissions>();
+    	DataSourceContextHolder.setDbType(DataSourceType.DZTG);
     	sysUsersPermissionsList=this.sysUsersPermissionsMapper.selectByUserName(userName);
     	for(SysUsersPermissions sysUsersPermission:sysUsersPermissionsList){
     		authorizationInfo.addStringPermission(sysUsersPermission.getPermission());
