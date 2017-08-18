@@ -54,6 +54,25 @@
     
     <script type="text/javascript">
     
+        function validateImage(url)  
+        {      
+            var xmlHttp ;  
+            if (window.ActiveXObject)  
+             {  
+              xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");  
+             }  
+             else if (window.XMLHttpRequest)  
+             {  
+              xmlHttp = new XMLHttpRequest();  
+             }   
+            xmlHttp.open("Get",url,false);  
+            xmlHttp.send();  
+            if(xmlHttp.status==404)  
+            return false;  
+            else  
+            return true;  
+        }
+    
     
         function operationFormatter(value,row,index) {
             var html = '<button type="button" id="cog'+index+'" class="btn btn-default btn-sm" title="设置">'
@@ -101,6 +120,11 @@
         /* 查询投资者产生的利润 */
         function queryInvestorProfit(){
             
+            $('#p1').css('display','none');
+            $('#p2').css('display','none');
+            $('#p3').css('display','none');
+            $('#p4').css('display','none');
+            
             //删除打印内容
             $('#investorNameCell').html('');
             $('#investorNoCell').html('');
@@ -129,19 +153,6 @@
                 alert("请输入投资者代码或投资者名称");
                 return;
             }
-            
-            /* 显示客户行为分析图 */
-                
-            var temp='10100187';
-            $("#picture").attr("src","resources/image/picture/" +temp+".jpg");    //修正收益
-            $("#picture_toatal").attr("src", "resources/image/picture_total/"+temp+".jpg");  //完整收益
-            $("#picture_hedge").attr("src", "resources/image/picture_hedge/"+temp+".jpg");    //修正盈亏
-            $("#picture_hedge_total").attr("src", "resources/image/picture_hedge_total/"+temp+".jpg"); //完整盈亏
-            $('#p1').css('display','block');
-            $('#p2').css('display','block');
-            $('#p3').css('display','block');
-            $('#p4').css('display','block');
-            
             
             $("#investorProfit").bootstrapTable(
                     'refresh',{url:"queryInvestorProfit",
@@ -175,6 +186,36 @@
                     $('#depNameCell').html(data.depName);
                     $('#INVESTOR_MARKETER_NAME').html(data.marketerName);
                     $('#INVESTOR_MEDIATOR_NAME').html(data.mediatorName);
+                    
+                    /* 显示客户行为分析图 */
+                    
+                    var temp='10100187';
+                    
+                    
+                    
+                  //修正收益
+                    if(validateImage("resources/image/return/" +data.investorNo+".jpg")){
+                        $('#p1').css('display','block');
+                    	$("#picture").attr("src","resources/image/return/" +data.investorNo+".jpg");    
+                    }
+                    
+                  //完整收益
+                    if(validateImage("resources/image/return_total/" +data.investorNo+".jpg")){
+                        $('#p2').css('display','block');
+                    	$("#picture_toatal").attr("src", "resources/image/return_total/"+data.investorNo+".jpg");  
+                    }
+                    
+                  //修正盈亏
+                    if(validateImage("resources/image/hedge/" +data.investorNo+".jpg")){
+                        $('#p3').css('display','block');
+                    	$("#picture_hedge").attr("src", "resources/image/hedge/"+data.investorNo+".jpg");    
+                    }
+                    
+                    //完整盈亏
+                    if(validateImage("resources/image/hedge_total/" +data.investorNo+".jpg")){
+                        $('#p4').css('display','block');
+                    	$("#picture_hedge_total").attr("src", "resources/image/hedge_total/"+data.investorNo+".jpg");
+                    }
                 }
             });
             
@@ -784,23 +825,23 @@
                     
                     
                     <div class="row placeholders">
-		              <label id="p1" for="picture" style="display:none;">修正收益率图</label>
-		              <img alt="" src="" id="picture">   
-		              <br><br><br>
-		            
-		              <label id="p2" for="picture_toatal" style="display:none;">完整收益率图</label>  
-		              <img alt="" src="" id="picture_toatal">
-		              <br><br><br> 
-		          </div>
-		          <div class="row placeholders">
-		              <label id="p3" for="picture_hedge" style="display:none;">修正盈亏图</label>
-		              <img alt="" src="" id="picture_hedge">  
-		               <br><br><br>  
-		              <label id="p4" for="picture_hedge_total" style="display:none;">完整盈亏图</label>
-		              <img alt="" src="" id="picture_hedge_total">  
-		              <br><br><br> 
-		          </div>
-		          
+                      <label id="p1" for="picture" style="display:none;">修正收益率图</label>
+                      <img alt="" src="" id="picture" style="height:auto;width: 1600px">   
+                      <br><br><br>
+                    
+                      <label id="p2" for="picture_toatal" style="display:none;">完整收益率图</label>  
+                      <img alt="" src="" id="picture_toatal" style="height:auto;width: 1600px">
+                      <br><br><br> 
+                  </div>
+                  <div class="row placeholders">
+                      <label id="p3" for="picture_hedge" style="display:none;">修正盈亏图</label>
+                      <img alt="" src="" id="picture_hedge" style="height:auto;width: 1600px">  
+                       <br><br><br>  
+                      <label id="p4" for="picture_hedge_total" style="display:none;">完整盈亏图</label>
+                      <img alt="" src="" id="picture_hedge_total" style="height:auto;width: 1600px">  
+                      <br><br><br> 
+                  </div>
+                  
               </div>
               
               <!-- 居间人带来利润查询 -->
