@@ -197,7 +197,7 @@
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table> -->
     
-    <table schema="sjzx" tableName="T_CRM_CUSTOMER" domainObjectName="CrmCustomer" 
+    <!-- <table schema="sjzx" tableName="T_CRM_CUSTOMER" domainObjectName="CrmCustomer" 
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>
@@ -205,7 +205,7 @@
     <table schema="sjzx" tableName="T_CRM_MEDIATOR" domainObjectName="CrmMediator" 
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
-    </table>
+    </table> -->
     
     <!-- <table schema="dztg" tableName="sys_permissions" domainObjectName="SysPermission" 
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
@@ -221,6 +221,18 @@
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false"> 
     </table>-->
+    
+    <!-- 返利息名单T_REBATE_LIST -->
+    <table schema="sjzx" tableName="T_REBATE_LIST" domainObjectName="RebateList" 
+        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
+        enableUpdateByExample="false" selectByExampleQueryId="false">
+    </table>
+    
+    <!-- 交易所返还特例名单 -->
+    <table schema="sjzx" tableName="T_SPECIAL_RETURN" domainObjectName="SpecialReturn" 
+        enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
+        enableUpdateByExample="false" selectByExampleQueryId="false">
+    </table>
     
   </context>
 </generatorConfiguration>

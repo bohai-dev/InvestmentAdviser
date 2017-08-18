@@ -11,7 +11,9 @@ import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -19,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bohai.adviser.dataSource.DataSourceContextHolder;
+import com.bohai.adviser.dataSource.DataSourceType;
+import com.bohai.adviser.entity.dztg.SysUser;
 import com.bohai.adviser.entity.sjzx.CrmMediator;
 import com.bohai.adviser.exception.BohaiException;
 import com.bohai.adviser.persistence.sjzx.CrmMediatorMapper;
 import com.bohai.adviser.service.CrmMediatorService;
+import com.bohai.adviser.vo.CrmMediatorAndCustomer;
 import com.bohai.adviser.vo.QueryCrmMediatorParamVO;
 import com.bohai.adviser.vo.QueryMediatorOverviewResultVO;
 
@@ -40,7 +46,7 @@ public class CrmMediatorController {
 
 	//跳转到居间人信息维护页面
 	@RequestMapping(value="toCrmMediator")
-	@RequiresPermissions(value="crm:mediator:view")
+	//@RequiresPermissions(value="crm:mediator:view")
 	public String toCrmMediator(){
 		
 		return "crm/crmMediator";
@@ -49,7 +55,11 @@ public class CrmMediatorController {
 	@RequestMapping(value="queryCrmMediator")
 	@ResponseBody
 	public List<CrmMediator> queryCrmMediator(@RequestBody(required = false) QueryCrmMediatorParamVO paramVO) throws BohaiException{
-		
+	    
+	    Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDeptCode(sysUser.getDepNo());
+	    DataSourceContextHolder.setDbType(DataSourceType.SJZX);
 		return this.crmMediatorMapper.selectByCondition(paramVO);
 	}
 	
@@ -58,38 +68,38 @@ public class CrmMediatorController {
 	 * @param paramVO
 	 * @throws BohaiException
 	 */
-	@RequestMapping(value="saveCrmMediator")
+	/*@RequestMapping(value="saveCrmMediator")
     @ResponseBody
 	public void saveCrmMediator(@RequestBody(required = true) CrmMediator paramVO) throws BohaiException{
 	    
 	    this.crmMediatorMapper.insert(paramVO);
-	}
+	}*/
 	
 	/**
 	 * 居间人变更
 	 * @param paramVO
 	 * @throws BohaiException
 	 */
-	@RequestMapping(value="updateCrmMediator")
+	/*@RequestMapping(value="updateCrmMediator")
     @ResponseBody
     public void updateCrmMediator(@RequestBody(required = true) CrmMediator paramVO) throws BohaiException{
         
         this.crmMediatorService.modifyCrmMediator(paramVO);
-    }
+    }*/
 	
-    @RequestMapping(value="removeCrmMediator")
+    /*@RequestMapping(value="removeCrmMediator")
     @ResponseBody
     public void removeCrmMediator(@RequestBody(required = true) CrmMediator paramVO) throws BohaiException{
         
         this.crmMediatorService.removeCrmMediator(paramVO);
-    }
+    }*/
     
-    @RequestMapping("generateMediatorNo")
+/*    @RequestMapping("generateMediatorNo")
     @ResponseBody
     public String generateMediatorNo(){
         
         return this.crmMediatorMapper.getMediatorNo();
-    }
+    }*/
     
     /**
      * 导出居间人信息
@@ -101,6 +111,10 @@ public class CrmMediatorController {
     @RequestMapping("exportCrmMediator")
     public void exportCrmMediator(QueryCrmMediatorParamVO paramVO, 
             HttpServletRequest request, HttpServletResponse response) throws BohaiException{
+        
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDeptCode(sysUser.getDepNo());
         
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet=wb.createSheet("居间人信息");
@@ -115,6 +129,7 @@ public class CrmMediatorController {
             sheet.setColumnWidth(i, 256*15);
         }
         
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmMediator> list = this.crmMediatorMapper.selectByCondition(paramVO);
         if(list != null && list.size() > 0){
             
@@ -188,7 +203,7 @@ public class CrmMediatorController {
             sheet1.setColumnWidth(i, 256*15);
         }
         
-        //TODO 根据条件查询居间人与客户关系T_CRM_MEDIATOR和T_CRM_CUSTOMER关联关系
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmMediatorAndCustomer> mediatorlist = this.crmMediatorMapper.selectMediatorCustomerRelation(paramVO);
 		if (mediatorlist != null && mediatorlist.size() > 0) {
 
@@ -230,6 +245,10 @@ public class CrmMediatorController {
     @ResponseBody
     public QueryMediatorOverviewResultVO queryMediatorOverview(@RequestBody QueryCrmMediatorParamVO paramVO) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDeptCode(sysUser.getDepNo());
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         return this.crmMediatorService.queryMediatorOverview(paramVO);
         
     }

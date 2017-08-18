@@ -545,7 +545,7 @@
             
             
             
-            <li><a href="#">欢迎：${sessionScope.username}</a></li>
+            <li><a href="#">欢迎：${sessionScope.user.fullName}</a></li>
             <li><a href="logout">退出</a></li>
           </ul>
           <form class="navbar-form navbar-right">

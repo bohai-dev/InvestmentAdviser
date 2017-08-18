@@ -32,6 +32,8 @@
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="BELONG_TYPE" property="belongType" jdbcType="VARCHAR" />
     <result column="BELONG_TO" property="belongTo" jdbcType="VARCHAR" />
+    <result column="BELONG_TO_NAME" property="belongToName" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
     <result column="DELETE_FLAG" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   
@@ -411,7 +413,7 @@
             nvl(INTEREST,0) - nvl(SPECIAL_INTEREST,0) as NET_INTEREST ,
             nvl(EXCHANGE_RETURN,0) - nvl(SPECIAL_EXCHANGE,0) as NET_AMOUNT,
             nvl(INTEREST,0) + nvl(EXCHANGE_RETURN,0) + nvl(SXFJSR,0) - nvl(SPECIAL_INTEREST,0)- nvl(SPECIAL_EXCHANGE,0) as NET_PROFIT
-            from T_REPORT_INVESTOR_PROFIT
+            from T_REPORT_INVESTOR_PROFIT t
     <where> 
     
         MONTH <![CDATA[ >= ]]> '201706'
@@ -425,7 +427,39 @@
         <if test="marketerNo != null and marketerNo != ''">
 	        and F_GETMARKETERNO(INVESTOR_NO) = #{marketerNo}
         </if>
-        
+        <if test="depNo != null and depNo != ''">
+            and exists (select 1 from t_crm_customer t1 where t.INVESTOR_NO = t1.INVESTOR_NO and t1.DEPT_CODE = #{depNo})
+        </if>
+    </where>
+  </select>
+  
+  <!-- 查询客户基本信息 -->
+  <select id="selectByCondition" parameterType="com.bohai.adviser.vo.QueryCrmCustomerParamVO" resultMap="BaseResultMap">
+    select t.*,t1.DEPT_NAME,
+    case t.belong_type 
+      when '0' then (select dept_name from t_crm_dept a  where a.dept_code = t.belong_to) 
+      when '1' then (select b.MARKETER_NAME from t_crm_marketer b where b.marketer_no = t.belong_to) 
+      when '2' then (select c.MEDIATOR_NAME from t_crm_mediator c where c.MEDIATOR_NO = t.belong_to) end as BELONG_TO_NAME
+    from T_CRM_CUSTOMER t left join T_CRM_DEPT t1 on t.DEPT_CODE = t1.DEPT_CODE
+    <where>
+        <if test="deptCode != null and deptCode != ''">
+            t.DEPT_CODE = #{deptCode}
+        </if>
+        <if test="investorNo != null and investorNo != ''">
+            and t.INVESTOR_NO = #{investorNo}
+        </if>
+        <if test="investorName != null and investorName != ''">
+            and t.INVESTOR_NAME like '%'||#{investorName}||'%'
+        </if>
+        <if test="belongType != null and belongType != '' and belongType != '9'.toString()">
+            and t.BELONG_TYPE = #{belongType}
+        </if>
+        <if test="belongType == '9'.toString()">
+            and (t.BELONG_TYPE is null or t.BELONG_TO is null)
+        </if>
+        <if test="belongTo != null and belongTo != ''">
+            and t.BELONG_TO = #{belongTo}
+        </if>
     </where>
   </select>
 </mapper>

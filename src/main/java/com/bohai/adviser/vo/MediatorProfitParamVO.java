@@ -28,7 +28,16 @@ public class MediatorProfitParamVO  implements Serializable{
      */
     private String marketerNo;
     
+    private String depNo;
     
+
+    public String getDepNo() {
+        return depNo;
+    }
+
+    public void setDepNo(String depNo) {
+        this.depNo = depNo;
+    }
 
     public String getMarketerNo() {
         return marketerNo;

@@ -11,17 +11,24 @@ import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bohai.adviser.dataSource.DataSourceContextHolder;
+import com.bohai.adviser.dataSource.DataSourceType;
+import com.bohai.adviser.entity.dztg.SysUser;
 import com.bohai.adviser.entity.sjzx.CrmMarketer;
 import com.bohai.adviser.exception.BohaiException;
 import com.bohai.adviser.persistence.sjzx.CrmMarketerMapper;
 import com.bohai.adviser.service.CrmMarketerService;
+import com.bohai.adviser.vo.CrmMarketerAndCustomer;
+import com.bohai.adviser.vo.CrmMarketerAndMediator;
 import com.bohai.adviser.vo.QueryCrmMarketerParamVO;
 import com.bohai.adviser.vo.QueryMarketerOverviewResultVO;
 
@@ -38,7 +45,7 @@ public class CrmMarketerController {
 
     //跳转到营销人员信息维护页面
     @RequestMapping(value="toCrmMarketer")
-    @RequiresPermissions(value="crm:marketer:view")
+    //@RequiresPermissions(value="crm:marketer:view")
     public String toCrmMarketer(){
         
         return "crm/crmMarketer";
@@ -48,6 +55,10 @@ public class CrmMarketerController {
     @ResponseBody
     public List<CrmMarketer> queryCrmMarketer(@RequestBody(required = false) QueryCrmMarketerParamVO paramVO){
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepCode(sysUser.getDepNo());
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         return crmMarketerMapper.selectByCondition(paramVO);
     }
     
@@ -55,47 +66,37 @@ public class CrmMarketerController {
      * 保存营销人员信息
      * @param paramVO
      */
-    @RequestMapping(value="saveCrmMarketer")
+    /*@RequestMapping(value="saveCrmMarketer")
     @ResponseBody
     public void saveCrmMarketer(@RequestBody(required = false) CrmMarketer paramVO){
         
         this.crmMarketerMapper.insertSelective(paramVO);
-    }
+    }*/
     
     /**
      * 更新营销人员信息
      * @param paramVO
      * @throws BohaiException 
      */
-    @RequestMapping(value="updateCrmMarketer")
+    /*@RequestMapping(value="updateCrmMarketer")
     @ResponseBody
     public void updateCrmMarketer(@RequestBody(required = false) CrmMarketer paramVO) throws BohaiException{
         
         this.crmMarketerService.modifyCrmMarketer(paramVO);
-    }
+    }*/
     
     /**
      * 删除营销人员
      * @param paramVO
      * @throws BohaiException 
      */
-    @RequestMapping(value="removeCrmMarketer")
+    /*@RequestMapping(value="removeCrmMarketer")
     @ResponseBody
     public void removeCrmMarketer(@RequestBody(required = false) CrmMarketer paramVO) throws BohaiException{
         
         this.crmMarketerService.removeCrmMarketer(paramVO);
-    }
+    }*/
     
-    /**
-     * 请求生成营销人员编号
-     * @return
-     */
-    @RequestMapping("generateMarketerNo")
-    @ResponseBody
-    public String generateMarketerNo(){
-        
-        return this.crmMarketerMapper.getMarketerNo();
-    }
     
     /**
      * 导出营销人员信息
@@ -108,6 +109,10 @@ public class CrmMarketerController {
     public void exportCrmMarketer(QueryCrmMarketerParamVO paramVO, 
             HttpServletRequest request, HttpServletResponse response) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepCode(sysUser.getDepNo());
+        
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet marketerSheet=wb.createSheet("营销人员信息");
         String[] marketerHead = {"行号","营销人员编号","营销人员名称","所属营业部代码","所属营业部","在职状态","入职日期","离职日期","身份证号","联系电话","联系地址","邮箱","备注"};
@@ -118,7 +123,8 @@ public class CrmMarketerController {
             
             marketerSheet.setColumnWidth(i, 256*15);
         }
-        //TODO  根据条件查询T_CRM_MARKETER
+
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmMarketer> marketerList= crmMarketerMapper.selectByCondition(paramVO);
         if(marketerList != null && marketerList.size() > 0){
             
@@ -168,6 +174,7 @@ public class CrmMarketerController {
             row3.createCell(i).setCellValue(marketerMediatorHead[i]);   
             marketerMediatorSheet.setColumnWidth(i, 256*15);
         }
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmMarketerAndMediator> marketerAndMediatorList= crmMarketerMapper.selectMaketerRelation(paramVO);
         if(marketerAndMediatorList != null && marketerAndMediatorList.size() > 0){
             for (int i = 0 ; i < marketerAndMediatorList.size(); i++) {
@@ -191,13 +198,15 @@ public class CrmMarketerController {
         
         XSSFSheet marketerInvestorSheet = wb.createSheet("营销人员与客户关系");
         String[] marketerInvestorHead = {"行号","营销人员编号","营销人员名称","投资者编号","投资者名称","备注"};
-        //TODO 根据条件查询T_CRM_MARKETER和T_CRM_CUSTOMER关联关系
+
         XSSFRow row4 = marketerInvestorSheet.createRow(0);
         //初始化表头
         for (int i = 0 ;i < marketerInvestorHead.length ; i++) {
             row4.createCell(i).setCellValue(marketerInvestorHead[i]);   
             marketerInvestorSheet.setColumnWidth(i, 256*15);
         }
+        
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmMarketerAndCustomer> marketerAndCustomerList = crmMarketerMapper.selectMaketerCustomerRelation(paramVO);
            if(marketerAndCustomerList != null && marketerAndCustomerList.size() > 0){
                 for (int i = 0 ; i < marketerAndCustomerList.size(); i++) {
@@ -238,6 +247,11 @@ public class CrmMarketerController {
     @ResponseBody
     public QueryMarketerOverviewResultVO queryMarketerOverview(@RequestBody QueryCrmMarketerParamVO paramVO) throws BohaiException {
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepCode(sysUser.getDepNo());
+        
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         return this.crmMarketerService.queryMarketerOverview(paramVO);
     }
 }

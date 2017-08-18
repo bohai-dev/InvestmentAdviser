@@ -50,4 +50,11 @@ public interface SysUserMapper {
      * @mbggenerated Wed Aug 09 10:51:07 CST 2017
      */
     int updateByPrimaryKey(SysUser record);
+    
+    /**
+     * 根据用户名查询用户信息
+     * @param username
+     * @return
+     */
+    SysUser queryUserByUsername(String username);
 }

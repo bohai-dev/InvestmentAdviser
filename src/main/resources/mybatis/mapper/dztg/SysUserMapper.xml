@@ -178,4 +178,11 @@
       DEP_NO = #{depNo,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_users
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

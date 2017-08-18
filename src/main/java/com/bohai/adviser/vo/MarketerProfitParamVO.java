@@ -22,6 +22,17 @@ public class MarketerProfitParamVO implements Serializable{
      * 营销人员名称
      */
     private String marketerName;
+    
+    private String depNo;
+    
+
+    public String getDepNo() {
+        return depNo;
+    }
+
+    public void setDepNo(String depNo) {
+        this.depNo = depNo;
+    }
 
     /**
      * 营销人员编号

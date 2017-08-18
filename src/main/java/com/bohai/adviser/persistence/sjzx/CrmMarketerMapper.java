@@ -3,8 +3,11 @@ package com.bohai.adviser.persistence.sjzx;
 import java.util.List;
 
 import com.bohai.adviser.entity.sjzx.CrmMarketer;
+import com.bohai.adviser.vo.CrmMarketerAndCustomer;
+import com.bohai.adviser.vo.CrmMarketerAndMediator;
 import com.bohai.adviser.vo.MarketerProfitParamVO;
 import com.bohai.adviser.vo.MarketerProfitResultVO;
+import com.bohai.adviser.vo.QueryCrmMarketerParamVO;
 
 public interface CrmMarketerMapper {
     /**
@@ -56,4 +59,17 @@ public interface CrmMarketerMapper {
     int updateByPrimaryKey(CrmMarketer record);
     
     List<MarketerProfitResultVO> queryMarketerSelfProfit(MarketerProfitParamVO paramVO);
+    
+    List<CrmMarketer> selectByCondition(QueryCrmMarketerParamVO paramVO);
+
+    List<CrmMarketerAndMediator> selectMaketerRelation(QueryCrmMarketerParamVO paramVO);
+    
+    List<CrmMarketerAndCustomer> selectMaketerCustomerRelation(QueryCrmMarketerParamVO paramVO);
+    
+    /**
+     * 查询最近一个月营销人员提成比例
+     * @param marketerNo
+     * @return
+     */
+    String getMarketerRate(String marketerNo);
 }

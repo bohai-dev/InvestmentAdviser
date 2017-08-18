@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,6 +14,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -55,18 +57,20 @@ public class UserRealm extends AuthorizingRealm {
         
         String username = (String) token.getPrincipal();
         //String password = new String((char[])token.getCredentials());
-        
-        /*SysUser sysUser = this.sysUserMapper.selectByPrimaryKey(username);
+        DataSourceContextHolder.setDbType(DataSourceType.DZTG);
+        SysUser sysUser = this.sysUserMapper.queryUserByUsername(username);
         if(sysUser == null){
             logger.warn("无此用户信息,用户名："+username);
             throw new UnknownAccountException("无此用户信息,用户名："+username);
-        }*/
+        }
         
         logger.info("token: "+JSON.toJSONString(token));
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.getSession().setAttribute("user", sysUser);
+        AuthenticationInfo authenticationInfo =new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
         
-        //return new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
-        return new SimpleAuthenticationInfo(username, new String((char[])token.getCredentials()), getName());
-        
+        //return new SimpleAuthenticationInfo(username, new String((char[])token.getCredentials()), getName());
+        return authenticationInfo; 
     }
 
 }

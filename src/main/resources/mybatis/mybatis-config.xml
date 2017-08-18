@@ -83,6 +83,8 @@
         <mapper resource="mybatis/mapper/sjzx/CrmCustomerMapper.xml"/>
         <mapper resource="mybatis/mapper/sjzx/CrmMarketerMapper.xml"/>
         <mapper resource="mybatis/mapper/sjzx/CrmMediatorMapper.xml"/>
+        <mapper resource="mybatis/mapper/sjzx/RebateListMapper.xml"/>
+        <mapper resource="mybatis/mapper/sjzx/SpecialReturnMapper.xml"/>
     </mappers>
 
 

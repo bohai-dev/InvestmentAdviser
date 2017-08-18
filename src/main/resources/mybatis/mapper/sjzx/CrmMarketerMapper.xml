@@ -339,7 +339,7 @@
             DBL16 ,
             MONEY,
             INTEREST+EXCHANGE_RETURN+SXFJSR-INVESTOR_SPECIAL_INTEREST-INVESTOR_SPECIAL_EXCHANGE-MEDIATOR_SPECIAL_INTEREST-MEDIATOR_SPECIAL_EXCHANGE-DBL16-MONEY as NET_PROFIT
-    from T_REPORT_MARKETER_PROFIT 
+    from T_REPORT_MARKETER_PROFIT t
     <where>
        MONTH <![CDATA[ >= ]]> '201706'
        <if test="marketerNo != null and marketerNo != ''">
@@ -348,7 +348,103 @@
        <if test="marketerName != null and marketerName != ''">
         and MARKETER_NAME = #{marketerName}
        </if>
+       <if test="depNo != null and depNo != ''">
+        and exists (select 1 from t_crm_marketer t1 where t.MARKETER_NO = t1.MARKETER_NO and t1.DEP_CODE = #{depNo})
+       </if>
     </where> 
     order by MONTH desc
+  </select>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.bohai.adviser.vo.QueryCrmMarketerParamVO">
+    select 
+        t.MARKETER_NO,
+        t.MARKETER_NAME,
+        t.DEP_CODE,
+        t1.DEPT_NAME as DEP_NAME,
+        t.PERSONNEL_DIVISION,
+        t.STATUS,
+        t.ENTRY_DATE,
+        t.LEAVE_DATE,
+        t.ALLOCATION_PROPORTION,
+        t.MARKETER_LEVEL,
+        t.CERT_NO,
+        t.TELEPHONE,
+        t.ADDRESS,
+        t.EMAIL,
+        t.REMARK,
+        t.CREATE_TIME,
+        t.UPDATE_TIME,
+        t.CERT_TYPE,
+        t.BIRETHDAY
+    from T_CRM_MARKETER t left join T_CRM_DEPT t1 
+    on t.DEP_CODE = t1.DEPT_CODE
+    <where>
+        <if test="marketerNo != null and marketerNo != ''">
+            t.MARKETER_NO = #{marketerNo,jdbcType=VARCHAR}
+        </if>
+        <if test="marketerName != null and marketerName != ''">
+            and t.MARKETER_NAME like  '%'||#{marketerName,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="depCode != null and depCode != ''">
+            and t.DEP_CODE = #{depCode,jdbcType=VARCHAR}
+        </if>
+    </where>
+  </select>
+  
+  <select id="selectMaketerRelation" resultType="com.bohai.adviser.vo.CrmMarketerAndMediator" parameterType="com.bohai.adviser.vo.QueryCrmMarketerParamVO">
+    select 
+        t.MARKETER_NO as marketerNo,
+        t.MARKETER_NAME as marketerName,
+        t1.MEDIATOR_NO as mediatorNo,
+        t1.MEDIATOR_NAME as mediatorName,
+        t1.REMARK as remark
+    from T_CRM_MARKETER t, T_CRM_MEDIATOR t1 
+    where t.MARKETER_NO = t1.BELONG_TO
+    and t1.BELONG_TYPE = '1'
+    <if test="marketerNo != null and marketerNo != ''">
+        and t.MARKETER_NO = #{marketerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="marketerName != null and marketerName != ''">
+        and t.MARKETER_NAME like  '%'||#{marketerName,jdbcType=VARCHAR}||'%'
+    </if>
+    <if test="depCode != null and depCode != ''">
+        and t.DEP_CODE = #{depCode,jdbcType=VARCHAR}
+    </if>
+    order by t.MARKETER_NO
+  </select>
+  
+  <select id="selectMaketerCustomerRelation" resultType="com.bohai.adviser.vo.CrmMarketerAndCustomer" parameterType="com.bohai.adviser.vo.QueryCrmMarketerParamVO">
+    select 
+        t.MARKETER_NO as marketerNo,
+        t.MARKETER_NAME as marketerName,
+        t1.INVESTOR_NO as investorNo,
+        t1.INVESTOR_NAME as investorName,
+        t1.REMARK as remark
+    from T_CRM_MARKETER t, T_CRM_CUSTOMER t1 
+    <where>
+        t.MARKETER_NO = t1.BELONG_TO
+        and t1.BELONG_TYPE = '1'
+        <if test="marketerNo != null and marketerNo != ''">
+            and t.MARKETER_NO = #{marketerNo,jdbcType=VARCHAR}
+        </if>
+        <if test="marketerName != null and marketerName != ''">
+            and t.MARKETER_NAME like  '%'||#{marketerName,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="depCode != null and depCode != ''">
+            and t.DEP_CODE = #{depCode,jdbcType=VARCHAR}
+        </if>
+    </where>
+    order by t.MARKETER_NO
+  </select>
+  
+  <select id="getMarketerRate" resultType="java.lang.String" parameterType="java.lang.String">
+    select * from (select case when sum<![CDATA[ < ]]> 50000 then '0.08' 
+                                when sum <![CDATA[ >= ]]> 50000 and sum <![CDATA[ < ]]> 100000 then '0.1' 
+                                when sum <![CDATA[ >= ]]> 100000 and sum <![CDATA[ < ]]> 200000 then '0.12' 
+                                when sum <![CDATA[ >= ]]> 200000 then '0.15' end as marketerRate 
+                    from T_REPORT_MARKETER_REWARD
+                    where MARKETER_NO = #{0}
+                    order by REPORT_MONTH desc)
+    where ROWNUM = 1
   </select>
 </mapper>

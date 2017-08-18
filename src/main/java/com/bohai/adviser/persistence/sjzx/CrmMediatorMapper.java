@@ -2,9 +2,13 @@ package com.bohai.adviser.persistence.sjzx;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.bohai.adviser.entity.sjzx.CrmMediator;
+import com.bohai.adviser.vo.CrmMediatorAndCustomer;
 import com.bohai.adviser.vo.MediatorProfitParamVO;
 import com.bohai.adviser.vo.MediatorProfitResultVO;
+import com.bohai.adviser.vo.QueryCrmMediatorParamVO;
 
 public interface CrmMediatorMapper {
     /**
@@ -56,4 +60,16 @@ public interface CrmMediatorMapper {
     int updateByPrimaryKey(CrmMediator record);
     
     List<MediatorProfitResultVO> queryMediatorProfitByMarketer(MediatorProfitParamVO paramVO);
+    
+    /**
+     * 根据条件查询居间人信息
+     * @param paramVO
+     * @return
+     */
+    List<CrmMediator> selectByCondition(QueryCrmMediatorParamVO paramVO);
+    
+    List<CrmMediatorAndCustomer> selectMediatorCustomerRelation(QueryCrmMediatorParamVO paramVO);
+    
+    @Select("select count(1) from T_CRM_MEDIATOR where belong_type = '1' and belong_to = #{0}")
+    Long countByMarketerNo(String marketerNo);
 }

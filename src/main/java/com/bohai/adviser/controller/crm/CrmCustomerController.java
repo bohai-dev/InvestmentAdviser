@@ -11,7 +11,9 @@ import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -19,77 +21,90 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bohai.adviser.dataSource.DataSourceContextHolder;
+import com.bohai.adviser.dataSource.DataSourceType;
+import com.bohai.adviser.entity.dztg.SysUser;
 import com.bohai.adviser.entity.sjzx.CrmCustomer;
 import com.bohai.adviser.exception.BohaiException;
 import com.bohai.adviser.persistence.sjzx.CrmCustomerMapper;
 import com.bohai.adviser.service.CrmCustomerService;
 import com.bohai.adviser.vo.QueryCrmCustomerParamVO;
 import com.bohai.adviser.vo.QueryInvestorOverviewResultVO;
+import com.bohai.adviser.vo.TableJsonResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 @Controller
 public class CrmCustomerController {
-	
-	@Autowired
-	private CrmCustomerMapper crmCustomerMapper;
-	
-	@Autowired
-	private CrmCustomerService crmCustomerService;
-	
+    
+    @Autowired
+    private CrmCustomerMapper crmCustomerMapper;
+    
+    @Autowired
+    private CrmCustomerService crmCustomerService;
+    
     static Logger logger = Logger.getLogger(CrmMarketerController.class);
 
-	//跳转到客户信息维护页面
-	@RequestMapping(value="toCrmCustomer")
-	@RequiresPermissions(value="crm:customer:view")
-	public String toCrmCustomer(){
-		
-		return "crm/crmCustomer";
-	}
-	
-	@RequestMapping(value="queryCrmCustomer")
-	@ResponseBody
-	public TableJsonResponse<CrmCustomer> queryCrmCustomer(@RequestBody(required = false) QueryCrmCustomerParamVO paramVO){
-	    
-	    
-	    PageHelper.startPage(paramVO.getPageNumber(), paramVO.getPageSize());
-		List<CrmCustomer> list = this.crmCustomerMapper.selectByCondition(paramVO);
-		Page<CrmCustomer> page = (Page)list;
-		TableJsonResponse<CrmCustomer> response = new TableJsonResponse<CrmCustomer>();
-		response.setTotal(page.getTotal());
-		response.setRows(list);
-		
-		return response;
-	}
-	
-	/**
-	 * 保存CRM客户信息
-	 * @param paramVO
-	 */
-	@RequestMapping(value="saveCrmCustomer")
-	@ResponseBody
-	public void saveCrmCustomer(@RequestBody(required = false) CrmCustomer paramVO){
-		
-	    this.crmCustomerMapper.insert(paramVO);
-		
-	}
-	
-	/**
-	 * 更新CRM客户信息
-	 * @param paramVO
-	 */
-	@RequestMapping(value="updateCrmCustomer")
-	@ResponseBody
-	public void updateCrmCustomer(@RequestBody(required = false) CrmCustomer paramVO){
-		this.crmCustomerMapper.updateByPrimaryKey(paramVO);
-	}
-	
-	@RequestMapping(value="removeCrmCustomer")
-	@ResponseBody
+    //跳转到客户信息维护页面
+    @RequestMapping(value="toCrmCustomer")
+    //@RequiresPermissions(value="crm:customer:view")
+    public String toCrmCustomer(){
+        
+        return "crm/crmCustomer";
+    }
+    
+    @RequestMapping(value="queryCrmCustomer")
+    @ResponseBody
+    public TableJsonResponse<CrmCustomer> queryCrmCustomer(@RequestBody(required = false) QueryCrmCustomerParamVO paramVO){
+        
+        /**
+         * 从session中获取登录信息
+         */
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        
+        //登录用户所在的部门
+        paramVO.setDeptCode(sysUser.getDepNo());
+        
+        PageHelper.startPage(paramVO.getPageNumber(), paramVO.getPageSize());
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
+        List<CrmCustomer> list = this.crmCustomerMapper.selectByCondition(paramVO);
+        Page<CrmCustomer> page = (Page)list;
+        TableJsonResponse<CrmCustomer> response = new TableJsonResponse<CrmCustomer>();
+        response.setTotal(page.getTotal());
+        response.setRows(list);
+        
+        return response;
+    }
+    
+    /**
+     * 保存CRM客户信息
+     * @param paramVO
+     */
+    /*@RequestMapping(value="saveCrmCustomer")
+    @ResponseBody
+    public void saveCrmCustomer(@RequestBody(required = false) CrmCustomer paramVO){
+        
+        this.crmCustomerMapper.insert(paramVO);
+        
+    }*/
+    
+    /**
+     * 更新CRM客户信息
+     * @param paramVO
+     */
+    /*@RequestMapping(value="updateCrmCustomer")
+    @ResponseBody
+    public void updateCrmCustomer(@RequestBody(required = false) CrmCustomer paramVO){
+        this.crmCustomerMapper.updateByPrimaryKey(paramVO);
+    }*/
+    
+    /*@RequestMapping(value="removeCrmCustomer")
+    @ResponseBody
     public void removeCrmCustomer(@RequestBody(required = false) CrmCustomer paramVO){
         this.crmCustomerMapper.deleteByPrimaryKey(paramVO.getInvestorNo());
-    }
-	
+    }*/
+    
     /**
      * 导出客户信息
      * @param paramVO
@@ -100,6 +115,10 @@ public class CrmCustomerController {
     @RequestMapping("exportCustomer")
     public void exportCustomer(QueryCrmCustomerParamVO paramVO, 
             HttpServletRequest request, HttpServletResponse response) throws BohaiException{
+        
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDeptCode(sysUser.getDepNo());
         
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet=wb.createSheet("客户信息");
@@ -114,6 +133,7 @@ public class CrmCustomerController {
             sheet.setColumnWidth(i, 256*15);
         }
         
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         List<CrmCustomer> list = this.crmCustomerMapper.selectByCondition(paramVO);
         if(list != null && list.size() > 0){
             
@@ -190,6 +210,10 @@ public class CrmCustomerController {
     @ResponseBody
     public QueryInvestorOverviewResultVO queryInvestorOverview(@RequestBody QueryCrmCustomerParamVO paramVO) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDeptCode(sysUser.getDepNo());
+        DataSourceContextHolder.setDbType(DataSourceType.SJZX);
         return this.crmCustomerService.queryInvestorOverview(paramVO);
         
     }

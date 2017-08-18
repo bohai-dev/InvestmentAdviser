@@ -3,12 +3,15 @@ package com.bohai.adviser.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bohai.adviser.entity.dztg.SysUser;
 import com.bohai.adviser.exception.BohaiException;
 import com.bohai.adviser.service.ProfitQueryService;
 import com.bohai.adviser.vo.InvestorProfitParamVO;
@@ -34,6 +37,10 @@ public class ProfitController {
     @RequestMapping(value="queryInvestorProfit")
     public List<InvestorProfitResultVO> queryInvestorProfit(@RequestBody InvestorProfitParamVO paramVO) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepNo(sysUser.getDepNo());
+        
         return this.profitQueryService.queryInvestorProfit(paramVO);
         
     }
@@ -41,6 +48,9 @@ public class ProfitController {
     @RequestMapping(value="queryMediatorProfit")
     public List<MediatorProfitResultVO> queryMediatorProfit(@RequestBody MediatorProfitParamVO paramVO) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepNo(sysUser.getDepNo());
         return this.profitQueryService.queryMediatorProfit(paramVO);
         
     }
@@ -48,6 +58,9 @@ public class ProfitController {
     @RequestMapping(value="queryMarketerProfit")
     public List<MarketerProfitResultVO> queryMarketerProfit(@RequestBody MarketerProfitParamVO paramVO) throws BohaiException{
         
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) currentUser.getSession().getAttribute("user");
+        paramVO.setDepNo(sysUser.getDepNo());
         return this.profitQueryService.queryMarketerProfit(paramVO);
         
     }

@@ -2,9 +2,12 @@ package com.bohai.adviser.persistence.sjzx;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.bohai.adviser.entity.sjzx.CrmCustomer;
 import com.bohai.adviser.vo.InvestorProfitParamVO;
 import com.bohai.adviser.vo.InvestorProfitResultVO;
+import com.bohai.adviser.vo.QueryCrmCustomerParamVO;
 
 public interface CrmCustomerMapper {
     /**
@@ -56,4 +59,22 @@ public interface CrmCustomerMapper {
     int updateByPrimaryKey(CrmCustomer record);
     
     List<InvestorProfitResultVO> queryInvestorProfitByMarketer(InvestorProfitParamVO paramVO);
+    
+    List<CrmCustomer> selectByCondition(QueryCrmCustomerParamVO paramVO);
+    
+    /**
+     * 查询居间人客户数量
+     * @param mediator
+     * @return
+     */
+    @Select("select count(1) from T_CRM_CUSTOMER where belong_type = '2' and belong_to = #{0}")
+    Long countByMediatorNo(String mediatorNo);
+    
+    /**
+     * 查询营销人员直属客户数量
+     * @param marketerNo
+     * @return
+     */
+    @Select("select count(1) from T_CRM_CUSTOMER where belong_type = '1' and belong_to = #{0}")
+    Long countByMarketerNo(String marketerNo);
 }
