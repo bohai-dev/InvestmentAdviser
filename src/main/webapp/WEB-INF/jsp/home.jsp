@@ -115,6 +115,46 @@
                 }
             });
             
+            $('#investorProfit').on('click-row.bs.table', function (row, $element, field) {
+            	/* 显示客户行为分析图 */
+                //修正收益
+                  if(validateImage("resources/image/"+$element.month+"/return/" +$element.investorNo+".jpg")){
+                      $('#p1').css('display','block');
+                      $("#picture").attr("src","resources/image/"+$element.month+"/return/" +$element.investorNo+".jpg");    
+                  }else {
+                	  $('#p1').css('display','none');
+                	  $("#picture").attr("src","");
+                  }
+                  
+                //完整收益
+                  if(validateImage("resources/image/"+$element.month+"/return_total/" +$element.investorNo+".jpg")){
+                      $('#p2').css('display','block');
+                      $("#picture_toatal").attr("src", "resources/image/"+$element.month+"/return_total/"+$element.investorNo+".jpg");  
+                  }else {
+                	  $('#p2').css('display','none');
+                	  $("#picture_toatal").attr("src","");
+				  }
+                  
+                //修正盈亏
+                  if(validateImage("resources/image/"+$element.month+"/hedge/" +$element.investorNo+".jpg")){
+                      $('#p3').css('display','block');
+                      $("#picture_hedge").attr("src", "resources/image/"+$element.month+"/hedge/"+$element.investorNo+".jpg");    
+                  }else {
+                	  $('#p3').css('display','none');
+                	  $("#picture_hedge").attr("src","");
+				  }
+                  
+                  //完整盈亏
+                  if(validateImage("resources/image/"+$element.month+"/hedge_total/" +$element.investorNo+".jpg")){
+                      $('#p4').css('display','block');
+                      $("#picture_hedge_total").attr("src", "resources/image/"+$element.month+"/hedge_total/"+$element.investorNo+".jpg");
+                  }else {
+                	  $('#p4').css('display','none');
+                	  $("#picture_hedge_total").attr("src","");
+				}
+            });
+            
+            
         });
         
         /* 查询投资者产生的利润 */
@@ -187,35 +227,6 @@
                     $('#INVESTOR_MARKETER_NAME').html(data.marketerName);
                     $('#INVESTOR_MEDIATOR_NAME').html(data.mediatorName);
                     
-                    /* 显示客户行为分析图 */
-                    
-                    var temp='10100187';
-                    
-                    
-                    
-                  //修正收益
-                    if(validateImage("resources/image/return/" +data.investorNo+".jpg")){
-                        $('#p1').css('display','block');
-                    	$("#picture").attr("src","resources/image/return/" +data.investorNo+".jpg");    
-                    }
-                    
-                  //完整收益
-                    if(validateImage("resources/image/return_total/" +data.investorNo+".jpg")){
-                        $('#p2').css('display','block');
-                    	$("#picture_toatal").attr("src", "resources/image/return_total/"+data.investorNo+".jpg");  
-                    }
-                    
-                  //修正盈亏
-                    if(validateImage("resources/image/hedge/" +data.investorNo+".jpg")){
-                        $('#p3').css('display','block');
-                    	$("#picture_hedge").attr("src", "resources/image/hedge/"+data.investorNo+".jpg");    
-                    }
-                    
-                    //完整盈亏
-                    if(validateImage("resources/image/hedge_total/" +data.investorNo+".jpg")){
-                        $('#p4').css('display','block');
-                    	$("#picture_hedge_total").attr("src", "resources/image/hedge_total/"+data.investorNo+".jpg");
-                    }
                 }
             });
             
